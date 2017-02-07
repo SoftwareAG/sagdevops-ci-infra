@@ -1,0 +1,44 @@
+version: "2"
+
+services:
+#  builder:
+    #image: sagdevops/spm:9.12
+#    image: daerepository03.eur.ad.sag:4443/ccdevops/spm:9.12.0.4
+#    restart: always
+#    networks: 
+#      - sagdevopsccserver_default
+
+  deployer:
+    image: sagdevops/spm:9.12
+    restart: always
+    ports:
+      - "8094:8094"
+    networks: 
+      - sagdevopsccserver_default
+
+  jenkins:
+    image: jenkins
+    build:
+      dockerfile: templates/jenkins/Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+    volumes: 
+      - ./data/jenkins_home:/var/jenkins_home
+    networks: 
+      - sagdevopsccserver_default
+    
+  up:
+    image: sagdevops/cli:9.12
+    volumes: 
+      - .:/src
+    command: sagccant deployer -Dcc=docker-compose
+    networks: 
+      - sagdevopsccserver_default
+    depends_on: 
+      - deployer
+
+networks: 
+  sagdevopsccserver_default:
+    external: true

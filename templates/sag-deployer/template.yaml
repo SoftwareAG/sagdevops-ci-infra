@@ -1,0 +1,46 @@
+alias: sag-deployer
+description: Software AG Deployer
+
+environments:
+  default:  
+    repo.product:  ${}
+    repo.fix:      ${}
+    is.license.key.alias: ${}
+
+    deployer.host: deployer
+    deployer.instance.name: deployer
+    deployer.primary.port:  8094
+    deployer.diagnostic.port:  8095
+    deployer.fixes:
+      - wMFix.integrationServer.Core
+
+layers:
+  deployer:
+    productRepo: ${repo.product}            # install products from
+    fixRepo:     ${repo.fix}                # install fixes from
+    templates:   
+      - deployer
+
+templates:
+  deployer:
+    licenses:
+      "IntegrationServer/config/licenseKey.xml": ${is.license.key.alias} 
+    fixes: ${deployer.fixes}
+    products:
+      Deployer:
+      integrationServer:
+        ${deployer.instance.name}:
+          primary.port: ${deployer.primary.port}
+          diagnostic.port: ${deployer.diagnostic.port}
+          package.list: WmDeployer,WmNUMDeployer,WmBrokerDeployer
+          license.file: IntegrationServer/config/licenseKey.xml
+
+provision:
+  default:
+    deployer: ${deployer.host}
+
+nodes:
+  default:
+    default:
+      port: 8092
+      secure: false

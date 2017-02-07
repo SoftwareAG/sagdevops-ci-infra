@@ -1,0 +1,23 @@
+version: "2"
+
+services:
+  deployer1:
+    image: mydeployer:9.12
+    build:
+      dockerfile: templates/sag-deployer/Dockerfile
+      context: .
+    ports:
+      - "8194:8094"
+    networks: 
+      - sagdevopsccserver_default
+
+  deployer2:
+    image: mydeployer:9.12
+    ports:
+      - "8294:8094"
+    networks: 
+      - sagdevopsccserver_default
+
+networks: 
+  sagdevopsccserver_default:
+    external: true

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<project xmlns="antlib:org.apache.tools.ant" xmlns:au="antlib:org.apache.ant.antunit" basedir="..">
+
+	<import file="../build.xml" />
+
+</project>

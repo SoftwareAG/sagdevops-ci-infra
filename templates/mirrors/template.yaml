@@ -1,0 +1,25 @@
+alias: mirrors
+description: Connection to external mirrors hosted by another Command Central
+version: 0.1
+changes:
+  - 0.1 Initial draft
+
+environments:
+  default:
+    release: 9.12
+    # docker run -it --rm alpine /sbin/ip route|awk '/default/ { print $3 }'
+    repo.host: 172.17.0.1
+    repo.port: 8092
+
+repositories:
+  product:                      
+    products-${release}:           
+      location: http://${repo.host}:${repo.port}/products-${release}/repository/
+      username: Administrator
+      password: manage
+ 
+  fix:                          
+    fixes-${release}:
+      location: http://${repo.host}:${repo.port}/fix-fixes-${release}/repository/
+      username: Administrator
+      password: manage

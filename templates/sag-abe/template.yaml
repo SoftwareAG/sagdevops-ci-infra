@@ -1,0 +1,33 @@
+alias: sag-abe
+description: Software AG Asset Build Environment
+
+environments:
+  default:  
+    repo.product:  ${}
+    repo.fix:      ${}
+
+    abe.fixes: []
+    abe.host:  builder
+
+layers:
+  abe:
+    productRepo: ${repo.product}            # install products from
+    fixRepo:     ${repo.fix}                # install fixes from
+    templates:   
+      - abe
+
+templates:
+  abe:
+    fixes: ${abe.fixes}
+    products:
+      acdl:
+
+provision:
+  default:
+    abe: ${abe.host}
+
+nodes:
+  default:
+    default:
+      port: 8092
+      secure: false
