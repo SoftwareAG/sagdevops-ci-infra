@@ -4,6 +4,8 @@
 	
 	<!-- add custom targets here -->
 
+	<target name="up" depends="connectmirrors,deployer,builder" description="Connect to external mirrors" />
+
 	<target name="connectmirrors" depends="waitcc" description="Connect to external mirrors" >
 		<antcall target="apply">
 			<param name="t" value="templates/mirrors" />

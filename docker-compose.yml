@@ -1,12 +1,11 @@
 version: "2"
 
 services:
-#  builder:
-    #image: sagdevops/spm:9.12
-#    image: daerepository03.eur.ad.sag:4443/ccdevops/spm:9.12.0.4
-#    restart: always
-#    networks: 
-#      - sagdevopsccserver_default
+  builder:
+    image: sagdevops/spm:9.12
+    restart: always
+    networks: 
+      - sagdevopsccserver_default
 
   deployer:
     image: sagdevops/spm:9.12
@@ -33,11 +32,12 @@ services:
     image: sagdevops/cli:9.12
     volumes: 
       - .:/src
-    command: sagccant deployer -Dcc=docker-compose
+    command: sagccant up -Dcc=docker-compose
     networks: 
       - sagdevopsccserver_default
     depends_on: 
       - deployer
+      - builder
 
 networks: 
   sagdevopsccserver_default:
