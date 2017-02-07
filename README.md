@@ -5,8 +5,11 @@ This project automates Infrastructure for Continous Integration.
 ## Requirements
 
 First you must [setup your Command Central server](https://github.com/SoftwareAG/sagdevops-cc-server)
+using native setup or Docker based setup. 
 
-Ensure you have the following available in your Command Central server
+This example requires Docker based setup.
+
+Ensure you have the following items available in your Command Central server
 
 * 9.12 product repository with the following products
   * Integration server
@@ -28,28 +31,27 @@ git submodule update
 
 Verify that your _antcc_ folder is not empty.
 
-## How to apply default configuration
+## Customizing configuration
 
-Default configuration includes:
+Modify [environments/default/env.properties](environments/default/env.properties) file as needed:
 
-* Reference to the products-9.12 product mirror repository
-* Reference to the fixes-9.12 fix mirror repository
-* No license keys
+```
+# repositories
+release=9.12
+repo.product=products-${release}
+repo.fix=fixes-${release}
 
-If the above repositories are not available in your Command Central, 
-edit [environments/default/env.properties](environments/default/env.properties) file as set the following properties
-
-* repo.product=<YOUR_PRODUCT_MIRROR_REPO>
-* repo.fix=<YOUR_FIX_MIRROR_REPO>
+# license key
+is.license.key.alias=0000306067_Integration_Server912-lnxamd64
+```
 
 Run configuration to setup default 'CI' environment 
 
 ```bash
-ant up
+docker-compose run --rm up
 ```
 
-Verify successful setup by running tests
+Open up your Command Central to see two new nodes
 
-```bash
-ant test
-```
+* Builder - Asset Build Environment 
+* Deployer - Open http://localhost:8094/WmDeployer/ and login as Administrator/manage

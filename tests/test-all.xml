@@ -3,4 +3,8 @@
 
 	<import file="../build.xml" />
 
+	<target name="test-me">
+		<echo>Empty for now</echo>
+	</target>
+
 </project>
