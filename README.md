@@ -48,10 +48,11 @@ is.license.key.alias=0000306067_Integration_Server912-lnxamd64
 Run configuration to setup default 'CI' environment 
 
 ```bash
+docker-compose up -d deployer builder
 docker-compose run --rm up
 ```
 
 Open up your Command Central to see two new nodes
 
 * Builder - Asset Build Environment 
-* Deployer - Open http://localhost:8094/WmDeployer/ and login as Administrator/manage
+* Deployer - Open [http://localhost:8094/WmDeployer/](http://localhost:8094/WmDeployer/) and login as Administrator/manage

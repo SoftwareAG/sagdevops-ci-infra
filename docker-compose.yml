@@ -35,7 +35,8 @@ services:
     command: sagccant up -Dcc=docker-compose
     networks: 
       - sagdevopsccserver_default
-    depends_on: 
+    depends_on:
+      - cce 
       - deployer
       - builder
 

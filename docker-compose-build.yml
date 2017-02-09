@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  deployer1:
+  deployer:
     image: mydeployer:9.12
     build:
       dockerfile: templates/sag-deployer/Dockerfile
@@ -11,10 +11,11 @@ services:
     networks: 
       - sagdevopsccserver_default
 
-  deployer2:
-    image: mydeployer:9.12
-    ports:
-      - "8294:8094"
+  builder:
+    image: myabe:9.12
+    build:
+      dockerfile: templates/sag-abe/Dockerfile
+      context: .
     networks: 
       - sagdevopsccserver_default
 

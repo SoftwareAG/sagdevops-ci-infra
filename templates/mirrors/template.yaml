@@ -10,16 +10,19 @@ environments:
     # docker run -it --rm alpine /sbin/ip route|awk '/default/ { print $3 }'
     repo.host: 172.17.0.1
     repo.port: 8092
+    repo.username: Administrator
+    repo.password: manage
 
 repositories:
   product:                      
     products-${release}:           
       location: http://${repo.host}:${repo.port}/products-${release}/repository/
-      username: Administrator
-      password: manage
+      #location: http://aquarius-dae.hq.sag/dataservewebM912/repository/
+      username: ${repo.username}
+      password: ${repo.password}
  
   fix:                          
     fixes-${release}:
       location: http://${repo.host}:${repo.port}/fix-fixes-${release}/repository/
-      username: Administrator
-      password: manage
+      username: ${repo.username}
+      password: ${repo.password}
