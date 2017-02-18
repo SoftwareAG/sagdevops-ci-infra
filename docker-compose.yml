@@ -36,7 +36,6 @@ services:
     networks: 
       - sagdevopsccserver_default
     depends_on:
-      - cce 
       - deployer
       - builder
 
