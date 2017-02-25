@@ -1,6 +1,5 @@
 # base Command Central server image
-#FROM sagdevops/cce:9.12
-FROM mycc:9.12
+FROM sagdevops/cce:9.12
 
 ADD . /src
 WORKDIR /src

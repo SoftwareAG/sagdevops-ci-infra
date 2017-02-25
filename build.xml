@@ -4,13 +4,7 @@
 	
 	<!-- add custom targets here -->
 
-	<target name="up" depends="connectmirrors,deployer,builder" description="Connect to external mirrors" />
-
-	<target name="connectmirrors" depends="waitcc" description="Connect to external mirrors" >
-		<antcall target="apply">
-			<param name="t" value="templates/mirrors" />
-		</antcall>
-	</target>	
+	<target name="up" depends="deployer,builder" description="Connect to external mirrors" />
 
 	<target name="deployer" depends="waitcc" description="Provision Deployer" >
 		<antcall target="apply">
@@ -21,6 +15,12 @@
 	<target name="builder" depends="waitcc" description="Provision Asset Build Environment" >
 		<antcall target="apply">
 			<param name="t" value="templates/sag-abe" />
+		</antcall>
+	</target>
+
+	<target name="connectmirrors" depends="waitcc" description="Connect to external mirrors" >
+		<antcall target="apply">
+			<param name="t" value="templates/mirrors" />
 		</antcall>
 	</target>
 

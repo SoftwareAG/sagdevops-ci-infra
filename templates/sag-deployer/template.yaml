@@ -7,7 +7,7 @@ environments:
     repo.fix:      ${}
     is.license.key.alias: ${}
 
-    deployer.host: deployer
+    deployer.host: local
     deployer.instance.name: deployer
     deployer.primary.port:  8094
     deployer.diagnostic.port:  8095

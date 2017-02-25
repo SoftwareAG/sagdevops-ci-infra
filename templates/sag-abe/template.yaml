@@ -7,7 +7,7 @@ environments:
     repo.fix:      ${}
 
     abe.fixes: []
-    abe.host:  builder
+    abe.host:  local
 
 layers:
   abe:

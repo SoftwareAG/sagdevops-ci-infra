@@ -1,9 +1,7 @@
 #!groovy​
 
 pipeline {
-    agent {
-        label 'docker'
-    }
+    agent none
 
     options {
         buildDiscarder(logRotator(numToKeepStr:'10'))
@@ -11,23 +9,31 @@ pipeline {
     }
 
     stages {
-        stage("Up") {
+        stage("Prepare") {
+            agent {
+                label 'master'
+            }
             steps {
-                timeout(time:10, unit:'MINUTES') {
-                    sh 'docker-compose -p sagdevops-ci-infra run --rm up'
-                }
+                checkout scm
+                sh 'git submodule update --init' 
+                stash(name:'scripts', includes:'**')
             }
         }
-        stage("Test") {
+
+        stage("Up and Test") {
+            agent {
+                label 'w64' // this is Windows pipeline
+            }
+            tools {
+                ant "ant-1.9.7"
+                jdk "jdk-1.8"
+            }
             steps {
-                timeout(time:5, unit:'MINUTES') {
-                    sh 'docker-compose -p sagdevops-ci-infra run --rm test'
+                timeout(time:20, unit:'MINUTES') {
+                    bat 'ant up test'
                 }
             }
             post {
-                //always {
-                //    sh 'docker-compose -p sagdevops-ci-infra stop'
-                //}
                 success {
                     junit 'build/tests/**/TEST-*.xml'
                 }
@@ -38,3 +44,4 @@ pipeline {
         }
     }
 }
+
