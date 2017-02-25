@@ -4,7 +4,6 @@ This project automates Software AG Infrastructure for Continuous Integration:
 
 * Provision Asset Build Enviornment
 * Provision Deployer IS instance
-* 
 
 ## Requirements
 
@@ -35,14 +34,6 @@ Verify that your _antcc_ folder is not empty.
 
 ## Quck start
 
-Provision ABE and Deployer into the Command Central installation:
-
-```bash
-ant up
-```
-
-## Customizing the process
-
 Modify [environments/default/env.properties](environments/default/env.properties) file as needed
 to point to your product and fix repositories as the license files:
 
@@ -52,9 +43,22 @@ release=9.12
 repo.product=products-${release}
 repo.fix=fixes-${release}
 
-# license key
+# MUST HAVE a valid license key
 is.license.key.alias=0000306067_Integration_Server912-lnxamd64
 ```
+
+Provision ABE and Deployer into the Command Central installation:
+
+```bash
+ant up
+```
+
+Open [http://localhost:8094/WmDeployer/](http://localhost:8094/WmDeployer/) and login as Administrator/manage
+
+
+# Building Docker images for ABE and Deployer
+
+NOTE: not complete!
 
 Run this command to setup default 'CI' environment 
 
