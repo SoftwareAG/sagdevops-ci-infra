@@ -29,6 +29,7 @@ pipeline {
                 jdk "jdk-1.8"
             }
             steps {
+                unstash 'scripts'
                 timeout(time:20, unit:'MINUTES') {
                     bat 'ant up test'
                 }

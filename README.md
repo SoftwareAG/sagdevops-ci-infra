@@ -1,33 +1,47 @@
 # Command Central CI Infrastructure 
 
-This project automates Software AG Infrastructure for Continuous Integration.
+This project automates Software AG Infrastructure for Continuous Integration:
+
+* Provision Asset Build Enviornment
+* Provision Deployer IS instance
+* 
 
 ## Requirements
 
-First you must [build your customized Command Central server](https://github.com/SoftwareAG/sagdevops-cc-server)
-docker image that includes:
+First you must [setup your Command Central server](https://github.com/SoftwareAG/sagdevops-cc-server)
+with the following:
 
-* 9.12 master or mirror product repository with the following products
+* Mirror product repository with the following products
   * Integration server
   * Deployer
   * Test Suite
   * Asset Build Environment
-* Master or mirror fix repository with the latest fixes for the above products
+* Mirror fix repository with the latest fixes for the above products
 * License key files for the above products
-
 
 To get started fork this project as you will need to customize it.
 
 Then run git submodule initialization procedure to pull antcc library
 
 ```bash
+git clone https://github.com/SoftwareAG/sagdevops-ci-infra.git
+cd sagdevops-ci-infra
 git submodule init
 git submodule update
 ```
 
 Verify that your _antcc_ folder is not empty.
 
-## Customizing configuration
+
+## Quck start
+
+Provision ABE and Deployer into the Command Central installation:
+
+```bash
+ant up
+```
+
+## Customizing the process
 
 Modify [environments/default/env.properties](environments/default/env.properties) file as needed
 to point to your product and fix repositories as the license files:
