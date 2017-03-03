@@ -1,9 +1,13 @@
 # Command Central CI Infrastructure 
 
-This project automates Software AG Infrastructure for Continuous Integration:
+This project automates provisioning of Software AG infrastructure for Continuous
+integration and deployment/delivery:
 
-* Provision Asset Build Enviornment
-* Provision Deployer IS instance
+* Jenkins OSS CI/CD server as a webapp on Command Central server
+* JFrog Artifactory OSS binary repository as webapp on Command Central server
+* SAG Asset Build Enviornment
+* SAG Deployer with WmTestSuite IS instance
+* SAG Designer with Local / Service Development
 
 ## Requirements
 
@@ -13,10 +17,11 @@ with the following:
 * Mirror product repository with the following products
   * Integration server
   * Deployer
-  * Test Suite
+  * Unit Test Framework
   * Asset Build Environment
+  * Designer with Service Development
 * Mirror fix repository with the latest fixes for the above products
-* License key files for the above products
+* License key files for Integration Server and Unit Test Framework
 
 To get started fork this project as you will need to customize it.
 
@@ -35,7 +40,7 @@ Verify that your _antcc_ folder is not empty.
 ## Quck start
 
 Modify [environments/default/env.properties](environments/default/env.properties) file as needed
-to point to your product and fix repositories as the license files:
+to point to your product and fix repositories and the license files:
 
 ```
 # repositories
@@ -43,34 +48,24 @@ release=9.12
 repo.product=products-${release}
 repo.fix=fixes-${release}
 
-# MUST HAVE a valid license key
+# MUST HAVE a valid license keys
 is.license.key.alias=0000306067_Integration_Server912-lnxamd64
+testsuite.license.key.alias=WmTestSuite912-lnxamd64
 ```
 
-Provision ABE and Deployer into the Command Central installation:
+Provision everything into the Command Central installation
 
 ```bash
 ant up
 ```
 
-Open [http://localhost:8094/WmDeployer/](http://localhost:8094/WmDeployer/) and login as Administrator/manage
+Open Web UIs:
 
+* [Command Central Web UI](https://localhost:8091/cce/web/#installationOverview:ALL/local/1)
+* [Deployer](http://localhost:8094/WmDeployer/) and login as Administrator/manage
+* [Artifactory](https://localhost:8091/artifactory/)
+* [Jenkins](https://localhost:8091/jenkins/)
 
-# Building Docker images for ABE and Deployer
-
-NOTE: not complete!
-
-Run this command to setup default 'CI' environment 
-
-```bash
-docker-compose up -d deployer builder
-docker-compose run --rm up
-```
-
-Open up your Command Central to see two new nodes
-
-* Builder - Asset Build Environment 
-* Deployer - Open [http://localhost:8094/WmDeployer/](http://localhost:8094/WmDeployer/) and login as Administrator/manage
 
 
 ______________________

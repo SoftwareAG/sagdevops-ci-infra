@@ -1,0 +1,44 @@
+alias: sag-designer
+description: Software AG Designer
+
+environments:
+  default:  
+    repo.product:  ${}
+    repo.fix:      ${}
+
+    testsuite.license.key.alias: ${}
+
+    designer.fixes: []
+    designer.node: local
+    designer.host: localhost
+
+layers:
+  designer:
+    productRepo: ${repo.product}            # install products from
+    fixRepo:     ${repo.fix}                # install fixes from
+    templates:   
+      - designer
+
+templates:
+  designer:
+    # License file needs to be configured in Designer preferences
+    licenses: 
+      "Designer/WmTestSuiteLicense.xml": ${testsuite.license.key.alias}
+    fixes: ${designer.fixes}
+    products:
+      LDev: # Service Development
+      vcs:  # Local version control
+      GWMDes: # Unit Test Framework
+
+provision:
+  default:
+    designer: ${designer.node}
+
+nodes:
+  default:
+    default:
+      port: 8092
+      secure: false
+
+    "${designer.node}":
+      host: ${designer.host}

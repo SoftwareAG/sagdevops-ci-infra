@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <project xmlns="antlib:org.apache.tools.ant" basedir="." default="up" xmlns:if="ant:if" xmlns:unless="ant:unless" >
 	<import file="antcc/main.xml" />
-	
-	<!-- add custom targets here -->
 
-	<target name="up" depends="deployer,builder" description="Connect to external mirrors" />
+	<target name="up" depends="jenkins,artifactory,restartcc,abe,deployer,designer" description="Provision all" />
 
 	<target name="deployer" depends="waitcc" description="Provision Deployer" >
 		<antcall target="apply">
@@ -12,11 +10,47 @@
 		</antcall>
 	</target>	
 
-	<target name="builder" depends="waitcc" description="Provision Asset Build Environment" >
+	<target name="abe" depends="waitcc" description="Provision Asset Build Environment" >
 		<antcall target="apply">
 			<param name="t" value="templates/sag-abe" />
 		</antcall>
 	</target>
+
+	<target name="designer" depends="waitcc" description="Provision Designer" >
+		<antcall target="apply">
+			<param name="t" value="templates/sag-designer" />
+		</antcall>
+	</target>
+
+	<target name="artifactory" depends="waitcc" description="Provision Artifactory" >
+		<property name="artifactory.download.url" value="https://bintray.com/jfrog/artifactory/download_file?file_path=jfrog-artifactory-oss-5.1.0.zip" />
+
+		<echo>Downloading Artifactory from ${artifactory.download.url} ...</echo>
+		<mkdir dir="build/temp" />
+		<get src="${artifactory.download.url}" dest="build/temp/artifactory.zip" usetimestamp="true" />
+
+		<unzip src="build/temp/artifactory.zip" dest="templates/artifactory/webapps" >
+			<patternset>
+				<include name="*/webapps/*.war"/>
+			</patternset>
+			<flattenmapper/>
+		</unzip>
+
+		<antcall target="apply">
+			<param name="t" value="templates/artifactory" />
+		</antcall>
+	</target>
+
+	<target name="jenkins" depends="waitcc" description="Provision Jenkins" >
+		<property name="jenkins.download.url" value="http://mirrors.jenkins.io/war-stable/latest/jenkins.war" />
+
+		<echo>Downloading Jenkins from ${jenkins.download.url} ...</echo>
+		<get src="${jenkins.download.url}" dest="templates/jenkins/webapps/jenkins.war" usetimestamp="true" />
+
+		<antcall target="apply">
+			<param name="t" value="templates/jenkins" />
+		</antcall>
+	</target>		
 
 	<target name="connectmirrors" depends="waitcc" description="Connect to external mirrors" >
 		<antcall target="apply">

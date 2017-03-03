@@ -9,7 +9,7 @@ pipeline {
     }
 
     stages {
-        stage("Prepare") {
+        stage("Checkout") {
             agent {
                 label 'master'
             }
@@ -20,7 +20,7 @@ pipeline {
             }
         }
 
-        stage("Up and Test") {
+        stage("Up") {
             agent {
                 label 'w64' // this is Windows pipeline
             }
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 unstash 'scripts'
                 timeout(time:20, unit:'MINUTES') {
-                    bat 'ant up test'
+                    bat 'ant up -Dcc=internal -Denv=internal'
                 }
             }
             post {
@@ -45,4 +45,3 @@ pipeline {
         }
     }
 }
-

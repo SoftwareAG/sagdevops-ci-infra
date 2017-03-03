@@ -7,10 +7,11 @@ environments:
     repo.fix:      ${}
     is.license.key.alias: ${}
 
-    deployer.host: local
+    deployer.node: local
+    deployer.host: localhost
     deployer.instance.name: deployer
-    deployer.primary.port:  8094
-    deployer.diagnostic.port:  8095
+    deployer.primary.port: 8094
+    deployer.diagnostic.port: 8095
     deployer.fixes:
       - wMFix.integrationServer.Core
 
@@ -27,20 +28,24 @@ templates:
       "IntegrationServer/config/licenseKey.xml": ${is.license.key.alias} 
     fixes: ${deployer.fixes}
     products:
-      Deployer:
+      GWM_IS:   # Unit Test Framework
+      Deployer: 
       integrationServer:
         ${deployer.instance.name}:
           primary.port: ${deployer.primary.port}
           diagnostic.port: ${deployer.diagnostic.port}
-          package.list: WmDeployer,WmNUMDeployer,WmBrokerDeployer
+          package.list: WmDeployer,WmNUMDeployer,WmBrokerDeployer,WmAgileAppsDeployer,WmServiceMock
           license.file: IntegrationServer/config/licenseKey.xml
 
 provision:
   default:
-    deployer: ${deployer.host}
+    deployer: ${deployer.node}
 
 nodes:
   default:
     default:
       port: 8092
       secure: false
+
+    "${deployer.node}":
+      host: ${deployer.host}

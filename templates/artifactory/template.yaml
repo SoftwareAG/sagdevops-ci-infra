@@ -1,0 +1,41 @@
+alias: artifactory
+description: JFrog Artifactory OSS setup as web app in CCE profile
+
+layers:
+  artifactory:
+    templates:
+      - artifactory-webapp
+ 
+templates:
+  artifactory-webapp:
+    files:
+      profiles/CCE/workspace/webapps/artifactory.war: webapps/artifactory.war
+      profiles/CCE/workspace/webapps/ROOT/WEB-INF/resources/context-artifractory.properties: webapps/context-artifactory.properties
+      profiles/CCE/data/artifactory/artifactory.config.xml: conf/artifactory.config.xml
+      profiles/CCE/data/artifactory/artifactory.system.properties: conf/artifactory.system.properties
+      profiles/CCE/data/artifactory/binarystore.xml: conf/binarystore.xml
+      profiles/CCE/data/artifactory/logback.xml: conf/logback.xml
+      profiles/CCE/data/artifactory/mimetypes.xml: conf/mimetypes.xml
+    products:
+      CCE:
+        default:
+          configuration:
+            OSGI-CCE:              
+              COMMON-MEMORY:
+                COMMON-MEMORY:
+                  InitSize: 256
+                  MaxSize: 1024
+              COMMON-JAVASYSPROPS: 
+                COMMON-JAVASYSPROPS: |
+                  artifactory.home=%OSGI_INSTALL_AREA%/data/artifactory   
+                  artdist=zip
+                  file.encoding=UTF8
+                  jruby.compile.invokedynamic=false
+                  org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true
+              COMMON-JVM-OPTIONS:
+                COMMON-JVM-OPTIONS: |
+                  -XX:+UseG1GC
+
+provision:
+  default:
+    artifactory: local

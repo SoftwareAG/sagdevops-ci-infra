@@ -6,7 +6,7 @@ WORKDIR /src
 
 # start tooling, apply template(s), cleanup
 RUN /sag/profiles/SPM/bin/startup.sh && /sag/profiles/CCE/bin/startup.sh && \
-    sagccant connectmirrors builder stopcc  -Denv=dockerfile && \
+    sagccant connectmirrors abe stopcc -Denv=dockerfile && \
     cd /sag && rm -fr /tmp/* common/conf/nodeId.txt profiles/SPM/logs/* profiles/CCE
 
 CMD sagccant build

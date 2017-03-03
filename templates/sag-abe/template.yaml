@@ -7,7 +7,9 @@ environments:
     repo.fix:      ${}
 
     abe.fixes: []
-    abe.host:  local
+
+    abe.node: local
+    abe.host: localhost
 
 layers:
   abe:
@@ -24,10 +26,13 @@ templates:
 
 provision:
   default:
-    abe: ${abe.host}
+    abe: ${abe.node}
 
 nodes:
   default:
     default:
       port: 8092
       secure: false
+
+    "${abe.node}":
+      host: ${abe.host}

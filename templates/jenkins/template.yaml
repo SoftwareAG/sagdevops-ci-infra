@@ -1,1 +1,29 @@
 alias: jenkins
+description: CloudBees Jenkins as web app in CCE profile
+
+layers:
+  jenkins:
+    templates:
+      - jenkins-webapp
+ 
+templates:
+  jenkins-webapp:
+    files:
+      profiles/CCE/workspace/webapps/jenkins.war: webapps/jenkins.war
+      profiles/CCE/workspace/webapps/ROOT/WEB-INF/resources/context-jenkins.properties: webapps/context-jenkins.properties
+    products:
+      CCE:
+        default:
+          configuration:
+            OSGI-CCE:              
+              COMMON-MEMORY:
+                COMMON-MEMORY:
+                  InitSize: 256
+                  MaxSize: 1024
+              COMMON-JAVASYSPROPS: 
+                COMMON-JAVASYSPROPS: |
+                  jenkins.home=%OSGI_INSTALL_AREA%/data/jenkins
+
+provision:
+  default:
+    jenkins: local
