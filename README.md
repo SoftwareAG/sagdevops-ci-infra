@@ -37,7 +37,7 @@ git submodule update
 Verify that your _antcc_ folder is not empty.
 
 
-## Quck start
+## Quick start
 
 Modify [environments/default/env.properties](environments/default/env.properties) file as needed
 to point to your product and fix repositories and the license files:
